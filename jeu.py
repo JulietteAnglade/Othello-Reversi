@@ -59,7 +59,8 @@ def partie():
         x, y = input("Où voulez-vous placer votre pion ? (donner les coordonnées (x, y)")
         if not est_disponible(x, y, couleur):
             print("Vous ne pouvez pas jouer ici")
-        else: 
+        else:
+            SE(x, y, couleur)
 
 
 
