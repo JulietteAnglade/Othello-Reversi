@@ -1,0 +1,61 @@
+from tkinter import *
+import tkinter.font
+
+#Fonctions de creations de pion
+
+couleur_joueur1 = '#AA0000'
+couleur_joueur2 = '#0000AA'
+
+n = 0
+
+def creer_pion(event):
+    global n, indication_tour
+    # position du pointeur de la souris
+    X = event.x
+    Y = event.y
+    # position de la souris dans la grille
+    x0 = X - X%60 + 5
+    y0 = Y - Y%60 + 5
+    
+    # test si la souris est "dans la grille"*
+    if 59 < x0 < 500 and 59 < y0 < 500:
+        #creation du pion
+        if n == 0:
+            couleur_joueur = couleur_joueur1
+            canvas.delete (indication_tour)
+            indication_tour = canvas.create_text ( 300 , 600 , text = "Tour joueur 2", fill = couleur_joueur2, font = police)
+        else:
+            couleur_joueur = couleur_joueur2
+            canvas.delete (indication_tour)
+            indication_tour = canvas.create_text ( 300 , 600 , text = "Tour joueur 1", fill = couleur_joueur1, font = police)
+        pion = canvas.create_oval(x0,y0,x0 + 50,y0 + 50, fill = couleur_joueur)
+        n = (n-1)**2
+
+
+
+#Interface graphique
+
+fenetre = Tk() #Creation de 'la base' de l'interface
+canvas = Canvas(fenetre, width=600, height=650, background='#090909') #creation du canvas (le support visuel)
+
+#creation de la grille
+    #grille 8x8, taille d'une case : 60x60
+
+for ligne in range(10):
+    canvas.create_line(60, ligne * 60, 540, ligne * 60, fill = '#DDDDDD')
+for colonne in range(10):
+    canvas.create_line(colonne * 60, 60, colonne * 60, 540, fill = '#DDDDDD')
+
+police = tkinter.font.Font(size = 20)
+
+indication_tour = canvas.create_text ( 300 , 600 , text = "Tour joueur 1", fill = couleur_joueur1, font = police)
+
+canvas.pack() #permet de faire apparaître le canvas
+
+#test de 'souris'
+
+fenetre.bind("<Button-1>", creer_pion)
+
+fenetre.mainloop() #fait apparaître le résultat
+
+
